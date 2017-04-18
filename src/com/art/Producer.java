@@ -2,32 +2,35 @@ package com.art;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.BlockingQueue;
+
+import static java.lang.Thread.sleep;
 
 /**
  * Created by art on 18.04.2017.
  */
-class Producer extends Thread {
-    private Queue<Integer> dataQueue;
-    private int number;
 
-    public Producer(LinkedList<Integer> c, int number) {
-        dataQueue = c;
-        this.number = number;
+class Producer implements Runnable {
+
+    private final BlockingQueue dataQueue;
+    private final int number;
+
+    public Producer(BlockingQueue dataQueue, int i) {
+        this.dataQueue = dataQueue;
+        this.number = i;
     }
 
+    @Override
     public void run() {
-        for (int i = 0; i < 10; i++) {
+        while(true) {
             try {
                 sleep((int)(Math.random() * 100));
-            } catch (InterruptedException e) {
-            }
-            if (dataQueue.size()>=100){
-//                sleep until 80
-            }
-            int generatedValue = (int)(Math.random() * 100);
-            System.out.println("Producer #" + this.number + " put: " + generatedValue);
-            dataQueue.add(generatedValue);
 
+                int generatedValue = (int)(Math.random() * 100);
+                dataQueue.put(generatedValue);
+                System.out.println("Producer#" + number + " Value: "+ generatedValue);
+            } catch (InterruptedException ex) {}
         }
     }
+
 }

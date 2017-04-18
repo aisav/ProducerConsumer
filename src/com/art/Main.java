@@ -1,15 +1,20 @@
 package com.art;
 
 import java.util.LinkedList;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class Main {
+    public static void main(String args[]){
 
-    public static void main(String args[]) {
-        LinkedList<Integer> c = new LinkedList<>();
-        Producer p1 = new Producer(c, 1);
-        Consumer c1 = new Consumer(c, 1);
+        BlockingQueue dataQueue = new LinkedBlockingQueue();
 
-        p1.start();
-        c1.start();
+        for(int i=1; i<=10; i++) {
+            Thread prodThread = new Thread(new Producer(dataQueue, i));
+            Thread consThread = new Thread(new Consumer(dataQueue, i));
+
+            prodThread.start();
+            consThread.start();
+        }
     }
 }

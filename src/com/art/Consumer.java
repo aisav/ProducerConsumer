@@ -2,32 +2,33 @@ package com.art;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.BlockingQueue;
+
+import static java.lang.Thread.sleep;
 
 /**
  * Created by art on 18.04.2017.
  */
-class Consumer extends Thread {
-    private Queue<Integer> dataQueue;
-    private int number;
 
-    public Consumer(LinkedList<Integer> c, int number) {
-        dataQueue = c;
-        this.number = number;
+class Consumer implements Runnable{
+
+    private final BlockingQueue dataQueue;
+    private final int number;
+
+    public Consumer (BlockingQueue dataQueue, int i) {
+        this.dataQueue = dataQueue;
+        this.number = i;
     }
 
+    @Override
     public void run() {
-        int value = 0;
-        for (int i = 0; i < 10; i++) {
+        while(true){
             try {
                 sleep((int)(Math.random() * 100));
-            } catch (InterruptedException e) {
-            }
-            if (dataQueue.isEmpty()) {
-//                stay until
-            }
-            value = dataQueue.poll();
-            System.out.println("Consumer #" + this.number + " got: " + value);
-
+                System.out.println("Consumer#"+ number + " Value: " + dataQueue.take());
+            } catch (InterruptedException ex) {}
         }
     }
+
+
 }
