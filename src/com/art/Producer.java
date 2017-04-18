@@ -24,7 +24,8 @@ class Producer implements Runnable {
     public void run() {
         while(true) {
             try {
-                sleep((int)(Math.random() * 100));
+                int random =(int) Math.random()* 100;
+                sleep((random != 0) ? random : 100);
 
                 if(dataQueue.size()>=100)
                 while(dataQueue.size()>=80)
