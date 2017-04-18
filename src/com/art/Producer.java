@@ -26,6 +26,10 @@ class Producer implements Runnable {
             try {
                 sleep((int)(Math.random() * 100));
 
+                if(dataQueue.size()>=100)
+                while(dataQueue.size()>=80)
+                    sleep(10);
+
                 int generatedValue = (int)(Math.random() * 100);
                 dataQueue.put(generatedValue);
                 System.out.println("Producer#" + number + " Value: "+ generatedValue);

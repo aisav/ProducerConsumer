@@ -25,7 +25,7 @@ class Consumer implements Runnable{
         while(true){
             try {
                 sleep((int)(Math.random() * 100));
-//                System.out.println("Consumer#"+ number + " Value: " + dataQueue.take());
+                System.out.println("-----Consumer#"+ number + " Value: " + dataQueue.take());
             } catch (InterruptedException ex) {}
         }
     }
